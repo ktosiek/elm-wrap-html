@@ -1,6 +1,7 @@
 module Main exposing (..)
 
 import SubHtml as Html
+import Html as RawHtml
 import Wrapper
 import Time
 import Browser
@@ -12,9 +13,16 @@ main = Browser.document {
     , update = update
   }
 
-view model = Html.div [] [ Html.text "yo!"
-    ,Html.br [] []
-    , clock model ]
+view model = Html.div []
+    [ Html.text "A timer, with all subscription inside the `clock` view function:"
+    , Html.br [] []
+    , clock model
+    , Html.br [] []
+    , RawHtml.h4 []
+        [ RawHtml.text "component from native Html.text"
+        ]
+        |> Wrapper.fromHtml
+    ]
 
 
 update msg model =
@@ -27,9 +35,11 @@ clock model =
     model
         |> Maybe.map (\time ->
             Html.div []
-                [ Time.toSecond Time.utc time |> String.fromInt |> Html.text
+                [ ("Second of this minute: " ++ (Time.toSecond Time.utc time |> String.fromInt))
+                    |> Html.text
                 , Html.br [] []
-                , String.fromFloat (timeUntilNextSecond time) |> Html.text
+                , ("Time until next second: " ++ String.fromFloat (timeUntilNextSecond time) ++ "ms")
+                    |> Html.text
                 ]
                 |> withSubs (Time.every (timeUntilNextSecond time) Tick)
             )

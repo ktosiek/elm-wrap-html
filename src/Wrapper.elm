@@ -1,4 +1,4 @@
-module Wrapper exposing (wrap, WithSubs)
+module Wrapper exposing (wrap, WithSubs, fromHtml)
 
 
 type alias WithSubs html msg = (html, Sub msg)
@@ -10,3 +10,7 @@ wrap function attrs elems_with_subs =
         elems = List.map Tuple.first elems_with_subs
     in
         (function attrs elems, Sub.batch subs)
+
+
+fromHtml : html -> WithSubs (html) msg
+fromHtml html = (html, Sub.none)
