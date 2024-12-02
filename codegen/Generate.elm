@@ -21,7 +21,7 @@ main =
 
 file : Elm.File
 file =
-    Elm.file [ "HelloWorld" ]
+    Elm.file [ "SubHtml" ]
         ([ Elm.declaration "hello"
             (Elm.string "World!")
          , Elm.declaration "text"

@@ -1,6 +1,6 @@
 module Main exposing (..)
 
-import HelloWorld
+import SubHtml as Html
 import Wrapper
 import Time
 import Browser
@@ -12,8 +12,8 @@ main = Browser.document {
     , update = update
   }
 
-view model = HelloWorld.div [] [ HelloWorld.text "yo!"
-    ,HelloWorld.br [] []
+view model = Html.div [] [ Html.text "yo!"
+    ,Html.br [] []
     , clock model ]
 
 
@@ -26,15 +26,15 @@ type Msg = Tick Time.Posix
 clock model =
     model
         |> Maybe.map (\time ->
-            HelloWorld.div []
-                [ Time.toSecond Time.utc time |> String.fromInt |> HelloWorld.text
-                , HelloWorld.br [] []
-                , String.fromFloat (timeUntilNextSecond time) |> HelloWorld.text
+            Html.div []
+                [ Time.toSecond Time.utc time |> String.fromInt |> Html.text
+                , Html.br [] []
+                , String.fromFloat (timeUntilNextSecond time) |> Html.text
                 ]
                 |> withSubs (Time.every (timeUntilNextSecond time) Tick)
             )
         |> Maybe.withDefault (
-            HelloWorld.text "waiting for a tick"
+            Html.text "waiting for a tick"
             |> withSubs (Time.every 1 Tick)
         )
 

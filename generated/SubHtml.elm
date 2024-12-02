@@ -1,4 +1,4 @@
-module HelloWorld exposing (..)
+module SubHtml exposing (..)
 
 import Html
 import Wrapper
